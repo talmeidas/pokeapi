@@ -52,64 +52,6 @@ HttpResponseStatusDTO {
 }
 ```
 
-```scheme
-PokeApiResponseDTO {
-  nome            string
-  cpf             string
-  cnhNumber       string
-  birthDate       string($date-time)
-  expirationDate  string($date-time)
-  issueDate       string($date-time)
-  local           string
-  category        string
-                  Enum: [ A, B, C, D, E ]
-  status          string
-                  Enum: [ REGULAR, IRREGULAR ]
-  created         string($date-time)
-  updated         string($date-time)
-}
-```
-
-## Contracts
-
-### 1. Get a driver license status by CNH number
-
-Request
-
-```yaml
-Protocol: HTTP/1.1
-Host: localhost:8010
-Path: /v1/poke-license/{cnhNumber}
-Method: GET
-Headers:
-  Accept: application/json
-  Authorization: Basic dXNlcjoxMjM=
-  Content-Type: application/json
-```
-
-Response
-
-```yaml
-Status Code: 200
-Status Description: OK
-Body:
-  {
-    "nome": "string",
-    "cpf": "string",
-    "cnhNumber": "string",
-    "birthDate": "2023-01-01T00:00:00.000Z",
-    "expirationDate": "2023-01-01T00:00:00.000Z",
-    "issueDate": "2023-01-01T00:00:00.000Z",
-    "local": "string",
-    "category": "string",
-    "status": "string",
-    "created": "2023-01-01T00:00:00.000Z",
-    "updated": "2023-01-01T00:00:00.000Z",
-  }
-```
-
-<br>
-
 ### Exception Responses
 
 ```yaml

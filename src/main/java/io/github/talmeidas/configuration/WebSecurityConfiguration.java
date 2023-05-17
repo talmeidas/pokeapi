@@ -19,10 +19,6 @@ public class WebSecurityConfiguration {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("saga-orchestration")
-                .password(passwordEncoder.encode("112358"))
-                .authorities("ROLE_SAGA_ORCHESTRATION")
-                .and()
                 .withUser("user")
                 .password(passwordEncoder.encode("123"))
                 .authorities("ROLE_USER");
