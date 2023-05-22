@@ -1,4 +1,4 @@
-package io.github.talmeidas.controller;
+package io.github.talmeidas.controller.integration;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PokemonControllerTest {
+class PokemonEvolutionChainControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -25,10 +25,25 @@ class PokemonControllerTest {
     @Order(1)
     public void testGetWithSuccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/v1/pokemon/bulbasaur")
+                        .get("/v1/evolution-chain/bulbasaur")
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("name").value("bulbasaur"))
+                .andExpect(MockMvcResultMatchers.content().json("{\n" +
+                        "  \"forms\": [\n" +
+                        "    \"bulbasaur\",\n" +
+                        "    \"ivysaur\"\n" +
+                        "  ]\n" +
+                        "}"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @Order(2)
+    public void testGetWithNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/v1/evolution-chain/007")
+                        .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(MockMvcResultMatchers.status().isNotFound())
                 .andDo(MockMvcResultHandlers.print());
     }
 }

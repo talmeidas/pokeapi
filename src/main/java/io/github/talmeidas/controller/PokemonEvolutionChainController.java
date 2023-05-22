@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Min;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/v1/evolution-chain", produces = "application/json")
+@RequestMapping(path = "/v1/evolution-chain")
 @Tag(name = "Pokemon Evolution Controller")
 @Slf4j
 public class PokemonEvolutionChainController {
@@ -25,7 +27,7 @@ public class PokemonEvolutionChainController {
     @LogExecutionTime
     @Operation(summary = "Get Pokemon Evolution Chain")
     @GetMapping("/{name}")
-    public ResponseEntity<PokemonEvolutionChainResponseDTO> getPokemonEvolutionChainByName(@PathVariable("name") final String name) {
+    public ResponseEntity<PokemonEvolutionChainResponseDTO> getPokemonEvolutionChainByName(@Min(1) @PathVariable("name") final String name) {
         final PokemonEvolutionChainResponseDTO response = service.getPokemonEvolutionChainByName(name);
         return ResponseEntity.ok(response);
     }

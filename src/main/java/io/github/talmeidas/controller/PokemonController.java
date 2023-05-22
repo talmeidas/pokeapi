@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.Min;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/v1/pokemon", produces = "application/json")
+@RequestMapping(path = "/v1/pokemon")
 @Tag(name = "Pokemon Controller")
 @Slf4j
 public class PokemonController {

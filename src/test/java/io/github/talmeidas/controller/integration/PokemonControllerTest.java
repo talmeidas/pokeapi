@@ -1,7 +1,5 @@
-package io.github.talmeidas.controller;
+package io.github.talmeidas.controller.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.talmeidas.dto.PokemonChallengeRequestDTO;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -18,7 +16,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class PokemonChallengeControllerTest {
+class PokemonControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -26,25 +24,21 @@ class PokemonChallengeControllerTest {
     @Test
     @Order(1)
     public void testGetWithSuccess() throws Exception {
-        PokemonChallengeRequestDTO pokemonChallengeRequest = PokemonChallengeRequestDTO.builder()
-                .challenger("bulbasaur")
-                .challenged("ivysaur")
-                .build();
-
         mockMvc.perform(MockMvcRequestBuilders
-                        .post("/v1/challenge")
-                        .content(asJsonString(pokemonChallengeRequest))
+                        .get("/v1/pokemon/bulbasaur")
                         .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("winner").value("ivysaur"))
+                .andExpect(MockMvcResultMatchers.jsonPath("name").value("bulbasaur"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
-    private static String asJsonString(final Object obj) {
-        try {
-            return new ObjectMapper().writeValueAsString(obj);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    @Test
+    @Order(2)
+    public void testGetWithNotFound() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/v1/pokemon/007")
+                        .contentType(MediaType.APPLICATION_JSON)
+                ).andExpect(MockMvcResultMatchers.status().isNotFound())
+                .andDo(MockMvcResultHandlers.print());
     }
 }

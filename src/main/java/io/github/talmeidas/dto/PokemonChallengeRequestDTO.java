@@ -16,10 +16,10 @@ import javax.validation.constraints.Size;
 @JsonIgnoreProperties
 public class PokemonChallengeRequestDTO {
     @NotNull
-    @Size(min = 2, message = "Minimum length 3 characters")
+    @Size(min = 1, message = "Minimum length 3 characters")
     private String challenger;
 
     @NotNull
-    @Size(min = 2, message = "Minimum length 3 characters")
+    @Size(min = 1, message = "Minimum length 3 characters")
     private String challenged;
 }

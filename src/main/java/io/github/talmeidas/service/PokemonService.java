@@ -17,8 +17,7 @@ public class PokemonService {
     public PokemonResponseDTO getPokemonByName(String name) {
         log.info("Getting pokemon by name - {}", name);
 
-        var getPokemonByNameOptional = client.getPokemonByName(name);
-        var entityPokemon = getPokemonByNameOptional.orElseThrow(() -> new RuntimeException("exception.unexpected.not.found"));
+        var entityPokemon = client.getPokemonByName(name);
 
         return mapper.toResponse(entityPokemon);
     }

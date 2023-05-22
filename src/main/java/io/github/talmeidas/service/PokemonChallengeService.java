@@ -20,11 +20,8 @@ public class PokemonChallengeService {
     public PokemonChallengeResponseDTO postPokemonChallenge(PokemonChallengeRequestDTO pokemonChallengeRequest) {
         log.info("Challenge pokemon - {}", pokemonChallengeRequest);
 
-        var getPokemonChallengerOptional = client.getPokemonByName(pokemonChallengeRequest.getChallenger());
-        var entityPokemonChallenger = getPokemonChallengerOptional.orElseThrow(() -> new RuntimeException("exception.unexpected.not.found"));
-
-        var getPokemonChallengedOptional = client.getPokemonByName(pokemonChallengeRequest.getChallenged());
-        var entityPokemonChallenged = getPokemonChallengedOptional.orElseThrow(() -> new RuntimeException("exception.unexpected.not.found"));
+        var entityPokemonChallenger = client.getPokemonByName(pokemonChallengeRequest.getChallenger());
+        var entityPokemonChallenged = client.getPokemonByName(pokemonChallengeRequest.getChallenged());
 
         int totalChallenger = entityPokemonChallenger.getStats().stream().mapToInt(PokemonAPIStatDTO::getBase_stat).sum();
         int totalChallenged = entityPokemonChallenged.getStats().stream().mapToInt(PokemonAPIStatDTO::getBase_stat).sum();

@@ -12,11 +12,11 @@ import java.util.Optional;
 @FeignClient(name = "pokeapi", url = "${client.pokemon.url}")
 public interface PokemonClient {
     @GetMapping("/v2/pokemon/{name}")
-    Optional<PokemonResponseDTO> getPokemonByName(@PathVariable("name") final String name);
+    PokemonResponseDTO getPokemonByName(@PathVariable("name") final String name);
 
     @GetMapping("/v2/pokemon-species/{name}")
-    Optional<PokemonAPISpeciesResponseDTO> getPokemonSpecieByName(@PathVariable("name") final String name);
+    PokemonAPISpeciesResponseDTO getPokemonSpecieByName(@PathVariable("name") final String name);
 
     @GetMapping("/v2/evolution-chain/{id}")
-    Optional<PokemonAPIEvolutionChainResponseDTO> getPokemonEvolutionChainByName(@PathVariable("id") final Integer id);
+    PokemonAPIEvolutionChainResponseDTO getPokemonEvolutionChainByName(@PathVariable("id") final Integer id);
 }

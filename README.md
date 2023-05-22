@@ -79,34 +79,8 @@ Body:
 ```
 
 ```yaml
-Status Code: 403
-Status Description: Forbidden
-Body:
-  {
-    "timestamp": "2023-01-01T00:00:00.000Z",
-    "status": 0,
-    "error": "string",
-    "message": "string",
-    "path": "string",
-  }
-```
-
-```yaml
-Status Code: 409
-Status Description: Conflict
-Body:
-  {
-    "timestamp": "2023-01-01T00:00:00.000Z",
-    "status": 0,
-    "error": "string",
-    "message": "string",
-    "path": "string",
-  }
-```
-
-```yaml
-Status Code: 422
-Status Description: Unprocessable Entity
+Status Code: 404
+Status Description: Not Found
 Body:
   {
     "timestamp": "2023-01-01T00:00:00.000Z",

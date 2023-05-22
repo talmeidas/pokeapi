@@ -22,23 +22,16 @@ public class PokemonEvolutionChainService {
     public PokemonEvolutionChainResponseDTO getPokemonEvolutionChainByName(String name) {
         log.info("Getting pokemon evolution by name - {}", name);
 
-        var getPokemonSpecieByNameOptional = client.getPokemonSpecieByName(name);
-        var entityPokemonSpecie = getPokemonSpecieByNameOptional.orElseThrow(() -> new RuntimeException("exception.unexpected.not.found"));
-
-        if (entityPokemonSpecie.getEvolution_chain() == null) {
-            throw new RuntimeException("exception.unexpected.not.found");
-        }
+        var entityPokemonSpecie = client.getPokemonSpecieByName(name);
 
         String urlEvolutionChain = entityPokemonSpecie.getEvolution_chain().getUrl();
-
 
         Integer idEvolutionChain = Integer.valueOf(
                 urlEvolutionChain
                         .replace(URL_EVOLUTION_CHAIN, "")
                         .replace("/", ""));
 
-        var getPokemonEvolutionChainByNameOptional = client.getPokemonEvolutionChainByName(idEvolutionChain);
-        var entityPokemonEvolutionChain = getPokemonEvolutionChainByNameOptional.orElseThrow(() -> new RuntimeException("exception.unexpected.not.found"));
+        var entityPokemonEvolutionChain = client.getPokemonEvolutionChainByName(idEvolutionChain);
 
         return mapper.toResponse(entityPokemonEvolutionChain);
     }

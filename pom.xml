@@ -29,9 +29,6 @@
 		<jacoco-maven-plugin.version>0.8.8</jacoco-maven-plugin.version>
 		<pitest-maven.version>1.9.10</pitest-maven.version>
 		<pitest-junit5-plugin.version>1.1.2</pitest-junit5-plugin.version>
-		<sonar.coverage.exclusions>
-			**/src/**/PokeApiApplication.java
-		</sonar.coverage.exclusions>
 	</properties>
 
 	<dependencies>
@@ -100,6 +97,11 @@
 			<artifactId>assertj-core</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20220924</version>
+		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -140,6 +142,11 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>${jacoco-maven-plugin.version}</version>
+				<configuration>
+<!--					<excludes>-->
+<!--						<exclude>**/*/PokeApiApplication.main</exclude>-->
+<!--					</excludes>-->
+				</configuration>
 				<executions>
 					<execution>
 						<id>default-prepare-agent</id>
@@ -155,12 +162,6 @@
 						</goals>
 					</execution>
 				</executions>
-				<configuration>
-					<excludes>
-						<exclude>**/src/**/GlobalExceptionHandler.java</exclude>
-						<exclude>**/src/**/PokeApiApplication.java</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
