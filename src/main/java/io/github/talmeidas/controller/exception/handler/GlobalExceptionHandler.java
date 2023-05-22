@@ -1,21 +1,20 @@
 package io.github.talmeidas.controller.exception.handler;
 
-import io.github.talmeidas.dto.*;
-import lombok.extern.log4j.*;
+import io.github.talmeidas.dto.HttpResponseStatusDTO;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.MessageSource;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.*;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
-import javax.persistence.EntityNotFoundException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
@@ -64,47 +63,11 @@ public class GlobalExceptionHandler {
 
     @ResponseBody
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(ConstraintViolationException.class)
-    public HttpResponseStatusDTO handleConstraintViolationException(final ConstraintViolationException exception,
-            final Locale locale) {
-        final String message = messageSource.getMessage(exception.getMessage(), null, locale);
-        return buildHttpResponseStatus(HttpStatus.BAD_REQUEST, message, webRequest.getContextPath());
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(IllegalArgumentException.class)
     public HttpResponseStatusDTO handleIllegalArgumentException(final IllegalArgumentException exception,
             final Locale locale) {
         final String message = messageSource.getMessage(exception.getMessage(), null, locale);
         return buildHttpResponseStatus(HttpStatus.BAD_REQUEST, message, webRequest.getContextPath());
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    public HttpResponseStatusDTO handleDataIntegrityViolationException(final DataIntegrityViolationException exception,
-            final Locale locale) {
-        final String message = messageSource.getMessage("exception.unexpected.data.integrity.violation", null, locale);
-        return buildHttpResponseStatus(HttpStatus.CONFLICT, message, webRequest.getContextPath());
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(EntityNotFoundException.class)
-    public HttpResponseStatusDTO handleEntityNotFoundException(final EntityNotFoundException exception,
-            final Locale locale) {
-        final String message = messageSource.getMessage(exception.getMessage(), null, locale);
-        return buildHttpResponseStatus(HttpStatus.NOT_FOUND, message, webRequest.getContextPath());
-    }
-
-    @ResponseBody
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ExceptionHandler(AccessDeniedException.class)
-    public HttpResponseStatusDTO handleAccessDeniedException(final AccessDeniedException exception,
-            final Locale locale) {
-        final String message = messageSource.getMessage("exception.access.denied", null, locale);
-        return buildHttpResponseStatus(HttpStatus.FORBIDDEN, message, webRequest.getContextPath());
     }
 
     @ResponseBody

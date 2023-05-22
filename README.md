@@ -1,4 +1,4 @@
-# Poke Api
+# Poke API
 
 ## Prerequisites
 
@@ -22,17 +22,28 @@
   - Code Coverage: [`Jacoco`](https://www.jacoco.org)
   - Architecture Testing: [`ArchUnit`](https://www.archunit.org/)
 
-## Running the application locally
+## Running the applications
 
 ```shell
-mvn clean install -Dmaven.test.skip=true
-mvn spring-boot:run -Dspring.profiles.active=default
+sh ./run-application.sh
 ```
 
-## Running the tests locally
+## Running the tests
 
 ```shell
-mvn -e clean install verify
+sh ./run-test.sh
+```
+
+## Running the mutation tests
+
+```shell
+sh ./run-mutation-test.sh
+```
+
+## Kill the applications
+
+```shell
+sh ./kill-application.sh
 ```
 
 ## Available Endpoints
